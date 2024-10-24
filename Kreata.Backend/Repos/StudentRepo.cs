@@ -1,6 +1,8 @@
 ﻿using Kreata.Backend.Context;
 using Kreata.Backend.Datas.Entities;
+using Kreata.Backend.Datas.Responses;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Kreata.Backend.Repos
 {
@@ -22,6 +24,12 @@ namespace Kreata.Backend.Repos
         {
             int count = _dbContext.Students.Count();
             return await _dbContext.Students.ToListAsync();
+        
         }
+        public Task<ControllerResponse>UpdateStudent(Student student)
+            {
+                _dbContext.ChangeTracker.Clear();
+            _dbContext.Entry(student).State = EntityState.Modified;
+            }
     }
 }
