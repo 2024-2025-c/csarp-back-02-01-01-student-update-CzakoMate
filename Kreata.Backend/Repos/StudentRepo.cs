@@ -28,9 +28,19 @@ namespace Kreata.Backend.Repos
         }
         public async Task<ControllerResponse>UpdateStudent(Student student)
             {
-                _dbContext.ChangeTracker.Clear();
+            ControllerResponse response = new ControllerResponse();
+            _dbContext.ChangeTracker.Clear();
             _dbContext.Entry(student).State = EntityState.Modified;
-            _dbContext.SaveChangesAsync();
+            try
+            {
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception e) { 
+                response.AppendNewError(e.Message);
+                response.AppendNewError($"{nameof(StudentRepo)} osztály, {nameof(UpdateStudent)} metódusban hiba keletkezett");
+                response.AppendNewError($"{student} frissítése nem sikerült!");
+            }
+            return response;
             }
     }
 }
