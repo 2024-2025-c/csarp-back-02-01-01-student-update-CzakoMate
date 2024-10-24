@@ -8,6 +8,6 @@
         }
         public string Error {  get; set; }=string.Empty;
         public bool HasError=>!string.IsNullOrEmpty(Error);
-    }
+    } 
     
 }
